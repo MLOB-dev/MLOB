@@ -32,63 +32,68 @@ education, and social sciences.
 
 To install the development version from GitHub:
 
-\`\`\`r install.packages(“devtools”)
+```r
+install.packages("devtools")
+devtools::install_github("MLOB-dev/MLOB")
+```
 
 MLOB is available on CRAN under the GPL-3 license. To install the
-released version: \`\`\`r install.packages(“MLOB”)
-
-The development version can be installed from GitHub via devtools:
-\`\`\`r devtools::install_github(“Dfkthbq01/MultiLevelOptimalBayes”)
+released version: 
+```r
+install.packages("MLOB")
+```
 
 ## 📦 View the Vignette
 
 After installing the package, run the following to open the introductory
 vignette:
-
-\`\`\`r vignette(“MultiLevelOptimalBayes-Intro”)
+```r
+vignette("MultiLevelOptimalBayes-Intro")
+```
 
 ## 📦 Examples
 
-\`\`\`r
-
+```r
 library(MultiLevelOptimalBayes)
+```
 
 ### Fit a model on the iris dataset
 
-result \<- mlob( Sepal.Length ~ Sepal.Width + Petal.Length, data = iris,
-group = “Species”, conf.level = 0.95 )
+```r
+result <- mlob(Sepal.Length ~ Sepal.Width + Petal.Length, data = iris,
+group = "Species", conf.level = 0.95)
+```
 
 ### View results
 
+```r
 summary(result)
+```
 
 ## 📦 Limitations
 
 -The estimator assumes approximately equal group sizes. Although
 balancing helps, unequal sizes may still bias results.
 
-- Grid-search is local (±5σ) around the ML estimate; global optimum is
-  not guaranteed.
-
-- Linear covariate residualization may miss nonlinear effects or
-  interactions.
+- Grid-search is local (±5σ) around the ML estimate; global optimum is 
+  found with high probability but is not guaranteed.
 
 - Jackknife resampling improves inference in small samples but can be
   computationally heavy.
 
--Currently supports two-level models with continuous outcomes only.
+- Currently supports two-level models with continuous outcomes only.
 Extensions to GLMMs or 3+ level models are future work.
 
 ## 📦 Contributing & Support
 
 Please open an issue at:
 
-<https://github.com/Dfkthbq01/MultiLevelOptimalBayes/issues>
+<https://github.com/MLOB-dev/MLOB/issues>
 
 Users may also join discussions or suggest enhancements on the
 Discussions page at
 
-<https://github.com/Dfkthbq01/MultiLevelOptimalBayes/discussions>.
+<https://github.com/MLOB-dev/MLOB/discussions>.
 
 ## 📦Authors
 
