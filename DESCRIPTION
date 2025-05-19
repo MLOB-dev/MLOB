@@ -1,7 +1,7 @@
 Package: MultiLevelOptimalBayes
 Type: Package
 Title: Regularized Bayesian Regression for Small-Sample Two-Level Latent Variable Models
-Version: 0.0.1.3
+Version: 0.0.1.4
 Authors@R: c(person("Valerii", "Dashuk", role = c("aut", "cre"), email = "vadashuk@gmail.com"),
     person("Binayak", "Timilsina", role = "aut", email = "binayak.timilsina001@gmail.com"),
     person("Martin", "Hecht", role = "aut",email = "martin.hecht@hsu-hh.de"),

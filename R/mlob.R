@@ -770,26 +770,51 @@ summary.mlob_result <- function(object, ...) {
   cat("\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n")
   
   
-  # Compute how many times st. err. of regularized Bayesian is smaller than sr. err. of ML
-  se_ratio <- object$Standard_Error_ML[1] / object$Standard_Error[1] 
+  # Extract first SE of ML and of regularized Bayes (or NA if missing)
+  se_ml  <- if (!is.null(object$Standard_Error_ML) &&
+                length(object$Standard_Error_ML) >= 1) object$Standard_Error_ML[[1]] else NA_real_
+  se_reg <- if (!is.null(object$Standard_Error) &&
+                length(object$Standard_Error) >= 1) object$Standard_Error[[1]] else NA_real_
   
-  # Display the note about trustworthiness of regularized Bayesian vs. ML
+  # Compute ratio (will be NaN/Inf if se_reg is zero or NA)
+  se_ratio <- se_ml / se_reg
+  
+  # Display the note header
   cat("\nNote:\n")
-
-  # Display the appropriate note based on standard error comparison
-  # If the ratio between standard errors is <= times 1.1, treat them as similarly accurate
   
-  if (se_ratio <= 1.1) {
-    cat("  The standard error from unoptimized ML estimation is approximately the same as the standard error obtained through our optimization procedure,\n",
-      "  meaning that both approaches yield similarly accurate estimates.\n", sep = "")
+  # Three‐way branching without any stop()
+  if (!is.finite(se_ratio)) {
+    
+    # Case 1: missing, infinite, zero, etc.
+    cat(
+      "  The standard errors cannot be compared because one or both are missing, zero, NA, NaN, or infinite.\n",
+      sep = ""
+    )
+    
+  } else if (se_ratio <= 1.1) {
+    
+    # Case 2: roughly equal
+    cat(
+      "  The standard error from unoptimized ML estimation is approximately the same as the standard error obtained through our optimization procedure,\n",
+      "  meaning that both approaches yield similarly accurate estimates.\n",
+      sep = ""
+    )
     
   } else {
+    
+    # Case 3: ML SE substantially larger
     cat(
-      sprintf("  The standard error from unoptimized ML estimation is about %.1f%% times larger than the standard error obtained through our optimization procedure, meaning that the optimized estimates are more accurate. \n",
-              se_ratio),
-      "  Concerning the estimates themselves, the unoptimized ML estimates may differ greatly from the optimized estimates and should not be reported..\n",
-      "  As the optimized estimates are always at least as accurate as the unoptimized ML estimates, please use them and their corresponding standard errors (first table of output) for interpretation and reporting. For more information, see Dashuk et al. (2025)..\n",
-      sep = "")
+      sprintf(
+        "  The standard error from unoptimized ML estimation is about %.1f%% larger than the standard error obtained through our optimization procedure,\n",
+        (se_ratio - 1) * 100
+      ),
+      "  meaning that the optimized estimates are more accurate.\n",
+      "  Concerning the estimates themselves, the unoptimized ML estimates may differ greatly from the optimized estimates and should not be reported.\n",
+      "  As the optimized estimates are always at least as accurate as the unoptimized ML estimates,\n",
+      "  please use them and their corresponding standard errors (first table of output) for interpretation and reporting.\n",
+      "  For more information, see Dashuk et al. (2025).\n",
+      sep = ""
+    )
   }
 }
 
