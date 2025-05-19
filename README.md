@@ -79,10 +79,10 @@ balancing helps, unequal sizes may still bias results.
   found with high probability but is not guaranteed.
 
 - Jackknife resampling improves inference in small samples but can be
-  computationally heavy.
+  computationally heavy in larger samples.
 
 - Currently supports two-level models with continuous outcomes only.
-Extensions to GLMMs or 3+ level models are future work.
+  Extensions to GLMMs or 3+ level models are future work.
 
 ## 📦 Contributing & Support
 
@@ -109,9 +109,9 @@ Steffen Zitzmann
 
 If you use MLOB in your research, please cite:
 
-Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S.
-(2024). An Optimally Regularized Estimator of Multilevel Latent Variable
-Models with Improved MSE Performance.
+Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024).
+An Optimally Regularized Estimator of Multilevel Latent Variable Models,
+with Improved MSE Performance
 <https://doi.org/10.13140/RG.2.2.18148.39048>
 
 ## 📫 Contact:

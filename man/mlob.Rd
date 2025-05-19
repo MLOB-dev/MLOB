@@ -105,11 +105,11 @@ summary(result_mtcars)
 
 }
 \references{
-Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024). An Optimally Regularized Estimator of Multilevel Latent Variable Models with Improved MSE Performance. \url{https://doi.org/10.13140/RG.2.2.18148.39048}
+Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024). \doi{10.13140/RG.2.2.18148.39048}
 
-Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024). Estimating Context Effects in Small Samples, Controlling for Covariates: An Optimally Regularized Bayesian Estimator for Multilevel Models: Manuscript submitted for publication. \url{http://dx.doi.org/10.13140/RG.2.2.34350.01604}
+Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024). \doi{10.13140/RG.2.2.34350.01604}
 
-Luedtke, O., Marsh, H. W., Robitzsch, A., Trautwein, U., Asparouhov, T., & Muthen, B. (2008). The multilevel latent covariate model: a new, more reliable approach to group-level effects in contextual studies. \emph{Psychological methods}, 13(3):203-229. \url{https://doi.org/10.1037/a0012869}
+Luedtke, O., Marsh, H. W., Robitzsch, A., Trautwein, U., Asparouhov, T., & Muthen, B. (2008). \doi{10.1037/a0012869}
 }
 \author{
 Valerii Dashuk \email{vadashuk@gmail.com},
