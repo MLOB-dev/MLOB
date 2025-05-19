@@ -1,9 +1,15 @@
 #' Multi-Level Optimal Bayes Function (MLOB)
 #'
 #'
-#' MultiLevelOptimalBayes (MLOB) is specifically designed for small-sample, two-level latent variable models, which are frequently used in fields such as psychology, education, and other disciplines that involve hierarchical data structures.
-#' This function estimates the between-group coefficient beta_b in a  multilevel latent variable model with covariates, using regularized Bayesian estimator.
-#' It is designed for scenarios where data is organized into multiple groups. When the data is unbalanced, it optimally balances the data across these groups.
+#' Implements a regularized Bayesian approach that optimizes
+#' the estimation of between-group coefficients by minimizing 
+#' Mean Squared Error (MSE), balancing both variance and bias.
+#' This method provides more reliable estimates 
+#' in scenarios with limited data, offering a robust solution for 
+#' accurate parameter estimation in multilevel models. The package is designed for researchers 
+#' in psychology, education, and related fields who face challenges in 
+#' estimating between-group effects in two-level latent variable models, particularly
+#' in scenarios with small sample sizes and low intraclass correlation coefficients. 
 #'
 #' @param formula an object of class "\link{formula}" (or one that can be coerced to that class): a symbolic description of the model to be fitted. Formula specifies the model (e.g., \code{Y ~ X + C...}), where Y is the dependent variable, X is the context variable, which is the focus of most applications of the model  (always included), and C includes all additional covariates.
 #' @param data a data frame (or object converted by \link{as.data.frame} to a data frame) containing the variables referenced in the formula. All variables used in the model, including the dependent variable, context variable, covariates, and grouping variable must be present in this data frame.
