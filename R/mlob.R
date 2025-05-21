@@ -437,7 +437,6 @@ mlob <- function(formula, data, group, balancing.limit=0.2, conf.level = 0.05, j
   }
   
   
-  
   data_CV$b_b = ML$beta_b_ML_CV # dummy real value of beta_b
   
   # Call estimate_Bay_CV function with data_CV
@@ -445,8 +444,14 @@ mlob <- function(formula, data, group, balancing.limit=0.2, conf.level = 0.05, j
   
   # recalculate SE of Bayesian estimator with jackknife if a
   if (jackknife == TRUE){
-    Bay_jackknife <- estimate_Bay_CV_SE_jackknife_individual(data_CV)
-    Bay$SE_beta_Bay <-Bay_jackknife$SE_beta_Bay_ML_jackknife_individual
+    Bay_jackknife    <- estimate_Bay_CV_SE_jackknife_individual(data_CV)
+    Bay$SE_beta_Bay  <- Bay_jackknife$SE_beta_Bay_ML_jackknife_individual
+    # Bay$SE_beta_ML   <- Bay_jackknife$SE_beta_ML_jackknife_individual # open in case jackknife for ML needed
+    # If there were any gamma‐covariates, copy over their SEs
+    if (!is.null(Bay_jackknife$SE_gamma_jackknife_individual)) {
+      Bay$SE_gamma   <- Bay_jackknife$SE_gamma_jackknife_individual
+    }
+    
   }
 
   # Generate the result output
@@ -1756,14 +1761,22 @@ estimate_Bay_CV_SE_jackknife_individual <- function(data) {
   # Initialize parameters
   n <- data$n
   J <- data$k
+  r <- min(n,50) # set up the number of replications for jackknife, r from 1 to n^J
 
   # Initialize vectors to store jackknife estimates for individual deletion
-  jackknife_beta_b_Bay_individual <- numeric(n)
-  jackknife_beta_b_Bay_ML_individual <- numeric(n)
+  jackknife_beta_b_Bay_individual <- numeric(r)
+  jackknife_beta_b_Bay_ML_individual <- numeric(r)
+  jackknife_beta_b_ML_individual <- numeric(r)
+  
+  # only if gamma‐covariates present
+  has_gamma <- ("kc" %in% names(data) && data$kc > 0)
+  if (has_gamma) {
+    p_gamma <- data$kc
+    jackknife_gamma_individual <- matrix(NA, nrow = r, ncol = p_gamma)
+  }
 
-  r = min(n,50) # set up the number of replications for jackknife, r from 1 to n^J
   # Jackknife by deleting one individual from each group simultaneously
-  for (i in 1:r) {
+  for (i in seq_len(r)) {
     # Generate J random indices (one for each group) from 1 to n
     random_indices <- sample(1:n, J, replace = TRUE)
 
@@ -1799,24 +1812,64 @@ estimate_Bay_CV_SE_jackknife_individual <- function(data) {
     # Store jackknife estimates
     jackknife_beta_b_Bay_individual[i] <- result_jackknife$beta_b_Bay
     jackknife_beta_b_Bay_ML_individual[i] <- result_jackknife$beta_b_Bay_ML
+    jackknife_beta_b_ML_individual[i] <- result_jackknife$beta_b_ML
+    
+    if (has_gamma) {
+      # assume res_j$gamma is a length‐kc numeric vector
+      jackknife_gamma_individual[i, ] <- result_jackknife$gamma
+    }
+    
   }
 
   # Calculate jackknife means for individual deletion
   jackknife_mean_beta_b_Bay_individual <- mean(jackknife_beta_b_Bay_individual)
   jackknife_mean_beta_b_Bay_ML_individual <- mean(jackknife_beta_b_Bay_ML_individual)
+  jackknife_mean_beta_b_ML_individual <- mean(jackknife_beta_b_ML_individual)
+  if (has_gamma) {
+    jackknife_mean_gamma_individual <- colMeans(jackknife_gamma_individual)
+  }
 
   # Calculate jackknife standard errors for individual deletion
-  SE_beta_Bay_jackknife_individual <- sqrt((n - 1) / n * sum((jackknife_beta_b_Bay_individual - jackknife_mean_beta_b_Bay_individual)^2))
-  SE_beta_Bay_ML_jackknife_individual <- sqrt((n - 1) / n * sum((jackknife_beta_b_Bay_ML_individual - jackknife_mean_beta_b_Bay_ML_individual)^2))
-
+  
+  SE <- function(vals, m) {
+    sqrt((n - 1) / n * sum((vals - m)^2))
+  }
+  
+  SE_beta_Bay_jackknife_individual       <- SE(jackknife_beta_b_Bay_individual, jackknife_mean_beta_b_Bay_individual)
+  SE_beta_Bay_ML_jackknife_individual    <- SE(jackknife_beta_b_Bay_ML_individual, jackknife_mean_beta_b_Bay_ML_individual)
+  SE_beta_ML_jackknife_individual        <- SE(jackknife_beta_b_ML_individual, jackknife_mean_beta_b_ML_individual)
+  
+  if (has_gamma) {
+    
+    SE_gamma_jackknife_individual <- sapply(
+      seq_len(p_gamma),
+      function(j) {
+        SE(jackknife_gamma_individual[, j], m = jackknife_mean_gamma_individual[j])
+      }
+    )
+    
+    names(SE_gamma_jackknife_individual) <- paste0("SE_gamma_", seq_len(p_gamma))
+  }
+  
   # Output updated results with jackknife standard errors
-  list(
-    beta_b_Bay = original_result$beta_b_Bay,
-    beta_b_Bay_ML = original_result$beta_b_Bay_ML,
-    SE_beta_Bay_jackknife_individual = SE_beta_Bay_jackknife_individual,
-    SE_beta_Bay_ML_jackknife_individual = SE_beta_Bay_ML_jackknife_individual
-    #original_result = original_result
+  
+  # 7. Return everything
+  out <- list(
+    beta_b_Bay                          = original_result$beta_b_Bay,
+    beta_b_Bay_ML                       = original_result$beta_b_Bay_ML,
+    beta_b_ML                           = original_result$beta_b_ML,
+    SE_beta_Bay_jackknife_individual    = SE_beta_Bay_jackknife_individual,
+    SE_beta_Bay_ML_jackknife_individual = SE_beta_Bay_ML_jackknife_individual,
+    SE_beta_ML_jackknife_individual     = SE_beta_ML_jackknife_individual
   )
+  
+  if (has_gamma) {
+    out$gamma                           <- original_result$gamma
+    out$SE_gamma_jackknife_individual   <- SE_gamma_jackknife_individual
+  }
+  
+  out
+  
 }
 
 # Example usage:

@@ -1,7 +1,7 @@
 Package: MultiLevelOptimalBayes
 Type: Package
-Title: 'MultiLevelOptimalBayes': Regularized Bayesian Regression for Small-Sample Two-Level Latent Variable Models
-Version: 0.0.1.4
+Title: 'MultiLevelOptimalBayes': Regularized Bayesian Estimator for Two-Level Latent Variable Models
+Version: 0.0.1.5
 Authors@R: c(person("Valerii", "Dashuk", role = c("aut", "cre"), email = "vadashuk@gmail.com"),
     person("Binayak", "Timilsina", role = "aut", email = "binayak.timilsina001@gmail.com"),
     person("Martin", "Hecht", role = "aut",email = "martin.hecht@hsu-hh.de"),
@@ -9,9 +9,9 @@ Authors@R: c(person("Valerii", "Dashuk", role = c("aut", "cre"), email = "vadash
   )
 Author: Valerii Dashuk [aut, cre], Binayak Timilsina [aut], Martin Hecht [aut], Steffen Zitzmann [aut]
 Maintainer: Valerii Dashuk <vadashuk@gmail.com>
-Description: Implements a regularized Bayesian approach that optimizes
-    the estimation of between-group coefficients by minimizing 
-    Mean Squared Error (MSE), balancing both variance and bias.
+Description: Implements a regularized Bayesian estimator that optimizes
+    the estimation of between-group coefficients for multilevel latent variable models
+    by minimizing Mean Squared Error (MSE), balancing both variance and bias.
     This 'MultiLevelOptimalBayes' package provides more reliable estimates 
     in scenarios with limited data, offering a robust solution for 
     accurate parameter estimation in multilevel models. It is designed for researchers 
