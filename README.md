@@ -40,7 +40,7 @@ devtools::install_github("MLOB-dev/MLOB")
 MLOB is available on CRAN under the GPL-3 license. To install the
 released version: 
 ```r
-install.packages("MLOB")
+install.packages("MultiLevelOptimalBayes")
 ```
 
 ## 📦 View the Vignette
