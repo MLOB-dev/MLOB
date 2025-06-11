@@ -147,6 +147,13 @@ mlob <- function(formula, data, group, balancing.limit=0.2, conf.level = 0.05, j
 
   all_vars <- all.vars(formula)
   response_var <- all_vars[1]
+  predictor_var <- all_vars[2]
+  
+  # Check that predictor_var is numeric
+  if (!is.numeric(data[[predictor_var]])) {
+    stop(sprintf("The main predictor variable '%s' must be numeric (not a factor or character).", predictor_var))
+  }
+  
 
   # Create the model matrix using the formula
   A <- stats::model.matrix(formula, data = data)
