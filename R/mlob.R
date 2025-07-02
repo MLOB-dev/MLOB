@@ -70,22 +70,16 @@
 #' 
 #' summary(result_iris)
 #' 
-#' # Example 2: usage with slightly unbalanced ChickWeight dataset
+#' # Example 2: will error, since ‘Diet’ is a factor
 #' 
-#' result_ChickWeight <- mlob(
+#' try(
+#' mlob(
 #' weight ~ Diet, 
 #' data = ChickWeight, 
 #' group = 'Time', 
 #' punish.coeff = 1.5, 
 #' jackknife = FALSE)
-#' 
-#' # View the results
-#' 
-#' print(result_ChickWeight)
-#' 
-#' # View summary statistics
-#' 
-#' summary(result_ChickWeight)
+#' )
 #' 
 #' # Example 3: usage with highly unbalanced mtcars dataset (adjusted balancing.limit)
 #' 
@@ -821,10 +815,25 @@ summary.mlob_result <- function(object, ...) {
   } else if (se_ratio > 1.1) {
     
     # Case 3: ML SE substantially larger
+    
+    pct_diff <- (se_ratio - 1) * 100
+    
+    # pick digits: none if large, 1 if moderate, 2 if small
+    digits <- if (pct_diff >= 100) {
+      0
+    } else if (pct_diff >= 50) {
+      1
+    } else {
+      2
+    }
+    
+    # format with exactly that many decimals
+    fmt_pct <- format(round(pct_diff, digits), nsmall = digits)
+    
     cat(
       sprintf(
-        "  The standard error from unoptimized ML estimation is about %.1f%% larger than the standard error obtained through our optimization procedure,\n",
-        (se_ratio - 1) * 100
+        "  The standard error from unoptimized ML estimation is about %s%% larger than the standard error obtained through our optimization procedure,\n",
+        fmt_pct
       ),
       "  meaning that the optimized estimates are more accurate.\n",
       "  Concerning the estimates themselves, the unoptimized ML estimates may\n",
