@@ -1,5 +1,5 @@
 ---
-title: "Introduction to MultiLevelOptimalBayes"
+title: "MultiLevelOptimalBayes-Intro"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{MultiLevelOptimalBayes-Intro}
@@ -17,18 +17,18 @@ library(MultiLevelOptimalBayes)
 
 # Overview
 
-**MultiLevelOptimalBayes (MLOB)** is designed for estimating two-level latent variable models, particularly in small sample settings. This is especially useful in psychology, education, and other fields with hierarchical or nested data structures. We present the R package MultiLevelOptimalBayes (MLOB) for estimating between-group effects in multilevel latent variable models. MLOB employs a regularised Bayesian estimator devised by Dashuk, Hecht, Lüdtke, Robitzsch, and Zitzmann (2024), which was subsequently enhanced for additional covariates by the same authors in 2025. This estimator chooses prior parameters to minimise the mean squared error (MSE) of the between-group effect by effectively balancing bias and variance. The regularised Bayesian estimator provides MSE-optimal estimations due to the mean-variance tradeoff, especially in scenarios of small sample sizes and poor intraclass correlation (ICC).
+**MultiLevelOptimalBayes (MLOB)** is designed for estimating two-level latent variable models, particularly in small sample settings. This is especially useful in psychology, education, and other fields with hierarchical or nested data structures. We present the R package MultiLevelOptimalBayes (MLOB) for estimating between-group effects in multilevel latent variable models. MLOB employs a regularised Bayesian estimator devised by Dashuk, Hecht, Luedtke, Robitzsch, and Zitzmann (2024), which was subsequently enhanced for additional covariates by the same authors in 2025. This estimator chooses prior parameters to minimise the mean squared error (MSE) of the between-group effect by effectively balancing bias and variance. The regularised Bayesian estimator provides MSE-optimal estimations due to the mean-variance tradeoff, especially in scenarios of small sample sizes and poor intraclass correlation (ICC).
 The MLOB software supports imbalanced group sizes through integrated data-balancing methods and offers comprehensive inference, including point estimates, standard errors, p-values, and confidence intervals for both primary regressors and covariates. To gain comprehensive understanding, we initially examine the theoretical underpinnings of the regularised Bayesian estimator (Dashuk et al. 2024, 2025), followed by a discussion of its implementation in MLOB, namely the core function mlob(). We illustrate the application of mlob() using real datasets. Consequently, we provide researchers in psychology, education, and related disciplines a robust, user-friendly instrument for dependable multilevel latent variable estimation, particularly in contexts characterised by small sample sizes and low ICCs.
 
 The core function `mlob()` estimates the between-group coefficient (`beta_b`) using a regularized Bayesian approach, and applies a data balancing procedure if the groups are unbalanced.
 
 ## Key Features
 
-- ✅ Suitable for small-sample, multilevel data
-- ✅ Performs regularized Bayesian estimation
-- ✅ Automatically balances data if necessary
-- ✅ Optional jackknife resampling for standard errors
-- ✅ Provides comparison with unregularized ML estimates
+- Suitable for small-sample, multilevel data
+- Performs regularized Bayesian estimation
+- Automatically balances data if necessary
+- Optional jackknife resampling for standard errors
+- Provides comparison with unregularized ML estimates
 
 # Function Usage
 
@@ -50,7 +50,7 @@ mlob(
 - `formula`: A formula (e.g., `Y ~ X + C`) where Y is the outcome, X is the context variable of interest, and C represents covariates.
 - `data`: A data.frame containing all variables in the formula and the grouping variable.
 - `group`: A string naming the grouping variable.
-- `balancing.limit`: Proportion (0–1) of the dataset that can be removed to balance group sizes. Default is 0.2.
+- `balancing.limit`: Proportion (0-1) of the dataset that can be removed to balance group sizes. Default is 0.2.
 - `conf.level`: Confidence level for confidence intervals. Default is 0.95 (95% CI).
 - `jackknife`: Logical. If TRUE, standard errors and CIs are computed via jackknife resampling. Default is FALSE.
 - `punish.coeff`: Multiplier for penalizing removal of entire groups during balancing. Higher values discourage full-group deletions.
@@ -126,7 +126,7 @@ The output is an object of class `mlob_result`, which contains:
 While `MultiLevelOptimalBayes` provides a robust solution for regularized estimation in two-level models, users should be aware of the following limitations:
 
 - **Local Grid Search**:  
-  The optimization is restricted to a local 5σ region around the ML estimate. Although this region captures the true MSE minimum with high probability (≥ 0.999 for J = 5), it does not guarantee identification of the global minimum.
+  The optimization is restricted to a local 5*sigma region around the ML estimate. Although this region captures the true MSE minimum with high probability (>= 0.999 for J = 5), it does not guarantee identification of the global minimum.
 
 - **Assumption of Equal Group Sizes**:  
   The estimator assumes equal group sizes to simplify the model. While averaging group sizes is a proposed solution, the method does not yet handle unbalanced group sizes natively, but find the optimal reduction to the balanced size.

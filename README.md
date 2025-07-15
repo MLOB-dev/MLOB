@@ -14,21 +14,21 @@ education, and social sciences.
 
 ------------------------------------------------------------------------
 
-## ✨ Features
+## Features
 
-- ✅ **Regularized Bayesian estimator** optimized for minimum mean
+- **Regularized Bayesian estimator** optimized for minimum mean
   squared error (MSE)
-- ✅ **Robust to small sample sizes** and **low intraclass correlation
+- **Robust to small sample sizes** and **low intraclass correlation
   (ICC)**
-- ✅ Supports **covariate adjustment** and **group-level balancing**
-- ✅ Optional **jackknife resampling** for improved CI coverage
-- ✅ Returns **full inferential output**: point estimates, standard
+- Supports **covariate adjustment** and **group-level balancing**
+- Optional **jackknife resampling** for improved CI coverage
+- Returns **full inferential output**: point estimates, standard
   errors, p-values, and confidence intervals
-- ✅ Clean and user-friendly interface via the `mlob()` function
+- Clean and user-friendly interface via the `mlob()` function
 
 ------------------------------------------------------------------------
 
-## 📦 Installation
+## Installation
 
 To install the development version from GitHub:
 
@@ -43,7 +43,7 @@ released version:
 install.packages("MultiLevelOptimalBayes")
 ```
 
-## 📦 View the Vignette
+## View the Vignette
 
 After installing the package, run the following to open the introductory
 vignette:
@@ -51,7 +51,7 @@ vignette:
 vignette("MultiLevelOptimalBayes-Intro")
 ```
 
-## 📦 Examples
+## Examples
 
 ```r
 library(MultiLevelOptimalBayes)
@@ -70,12 +70,12 @@ group = "Species", conf.level = 0.95)
 summary(result)
 ```
 
-## 📦 Limitations
+## Limitations
 
 -The estimator assumes approximately equal group sizes. Although
 balancing helps, unequal sizes may still bias results.
 
-- Grid-search is local (±5σ) around the ML estimate; global optimum is 
+- Grid-search is local around the ML estimate; global optimum is 
   found with high probability but is not guaranteed.
 
 - Jackknife resampling improves inference in small samples but can be
@@ -84,7 +84,7 @@ balancing helps, unequal sizes may still bias results.
 - Currently supports two-level models with continuous outcomes only.
   Extensions to GLMMs or 3+ level models are future work.
 
-## 📦 Contributing & Support
+## Contributing & Support
 
 Please open an issue at:
 
@@ -95,7 +95,7 @@ Discussions page at
 
 <https://github.com/MLOB-dev/MLOB/discussions>.
 
-## 📦Authors
+## Authors
 
 Valerii Dashuk
 
@@ -105,7 +105,7 @@ Martin Hecht
 
 Steffen Zitzmann
 
-## 📚 Citation
+## Citation
 
 If you use MLOB in your research, please cite:
 
@@ -114,7 +114,7 @@ An Optimally Regularized Estimator of Multilevel Latent Variable Models,
 with Improved MSE Performance
 <https://doi.org/10.13140/RG.2.2.18148.39048>
 
-## 📫 Contact:
+## Contact:
 
 <martin.hecht@hsu-hh.de>
 

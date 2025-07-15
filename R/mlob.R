@@ -70,16 +70,24 @@
 #' 
 #' summary(result_iris)
 #' 
-#' # Example 2: will error, since ‘Diet’ is a factor
+#' # Example 2: usage with slightly unbalanced ChickWeight dataset
 #' 
-#' try(
-#' mlob(
+#' \dontrun{
+#' result_ChickWeight <- mlob(
 #' weight ~ Diet, 
 #' data = ChickWeight, 
 #' group = 'Time', 
 #' punish.coeff = 1.5, 
 #' jackknife = FALSE)
-#' )
+#' 
+#' # View the results
+#' 
+#' print(result_ChickWeight)
+#' 
+#' # View summary statistics
+#' 
+#' summary(result_ChickWeight)
+#' }
 #' 
 #' # Example 3: usage with highly unbalanced mtcars dataset (adjusted balancing.limit)
 #' 
@@ -448,7 +456,7 @@ mlob <- function(formula, data, group, balancing.limit=0.2, conf.level = 0.05, j
     Bay_jackknife    <- estimate_Bay_CV_SE_jackknife_individual(data_CV)
     Bay$SE_beta_Bay  <- Bay_jackknife$SE_beta_Bay_ML_jackknife_individual
     # Bay$SE_beta_ML   <- Bay_jackknife$SE_beta_ML_jackknife_individual # open in case jackknife for ML needed
-    # If there were any gamma‐covariates, copy over their SEs
+    # If there were any gamma-covariates, copy over their SEs
     if (!is.null(Bay_jackknife$SE_gamma_jackknife_individual)) {
       Bay$SE_gamma   <- Bay_jackknife$SE_gamma_jackknife_individual
     }
@@ -794,7 +802,7 @@ summary.mlob_result <- function(object, ...) {
   # Display the note header
   cat("\nNote:\n")
   
-  # Three‐way branching without any stop()
+  # Three-way branching without any stop()
   if (!is.finite(se_ratio)) {
     
     # Case 1: missing, infinite, zero, etc.
@@ -814,14 +822,12 @@ summary.mlob_result <- function(object, ...) {
     
   } else if (se_ratio > 1.1) {
     
-    # Case 3: ML SE substantially larger
-    
     pct_diff <- (se_ratio - 1) * 100
     
     # pick digits: none if large, 1 if moderate, 2 if small
-    digits <- if (pct_diff >= 100) {
+    digits <- if (pct_diff >= 200) {
       0
-    } else if (pct_diff >= 50) {
+    } else if (pct_diff >= 100) {
       1
     } else {
       2
@@ -1592,7 +1598,7 @@ estimate_Bay_CV <-
   Tau02_min <- max(0.01, tau_x2 - d_search * radius)
   Tau02_max <- max(0.01, tau_x2 + d_search * radius)
   
-  # Fallback to a fixed window if anything’s off
+  # Fallback to a fixed window if anything's off
   if (!all(is.finite(c(Tau02_min, Tau02_max))) || Tau02_min >= Tau02_max) {
     Tau02_min <- 0.01
     Tau02_max <- 10
@@ -1794,7 +1800,7 @@ estimate_Bay_CV_SE_jackknife_individual <- function(data) {
   jackknife_beta_b_Bay_ML_individual <- numeric(r)
   jackknife_beta_b_ML_individual <- numeric(r)
   
-  # only if gamma‐covariates present
+  # only if gamma-covariates present
   has_gamma <- ("kc" %in% names(data) && data$kc > 0)
   if (has_gamma) {
     p_gamma <- data$kc
@@ -1841,7 +1847,7 @@ estimate_Bay_CV_SE_jackknife_individual <- function(data) {
     jackknife_beta_b_ML_individual[i] <- result_jackknife$beta_b_ML
     
     if (has_gamma) {
-      # assume res_j$gamma is a length‐kc numeric vector
+      # assume res_j$gamma is a length-kc numeric vector
       jackknife_gamma_individual[i, ] <- result_jackknife$gamma
     }
     

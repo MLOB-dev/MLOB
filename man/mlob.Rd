@@ -81,16 +81,24 @@ jackknife = FALSE)
 
 summary(result_iris)
 
-# Example 2: will error, since ‘Diet’ is a factor
+# Example 2: usage with slightly unbalanced ChickWeight dataset
 
-try(
-mlob(
+\dontrun{
+result_ChickWeight <- mlob(
 weight ~ Diet, 
 data = ChickWeight, 
 group = 'Time', 
 punish.coeff = 1.5, 
 jackknife = FALSE)
-)
+
+# View the results
+
+print(result_ChickWeight)
+
+# View summary statistics
+
+summary(result_ChickWeight)
+}
 
 # Example 3: usage with highly unbalanced mtcars dataset (adjusted balancing.limit)
 
