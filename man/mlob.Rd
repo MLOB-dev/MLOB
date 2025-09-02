@@ -9,7 +9,7 @@ mlob(
   data,
   group,
   balancing.limit = 0.2,
-  conf.level = 0.05,
+  conf.level = 0.95,
   jackknife = FALSE,
   punish.coeff = 2,
   ...
@@ -33,7 +33,9 @@ mlob(
 \item{...}{additional arguments passed to the function.}
 }
 \value{
-A list containing the results of the regularized Bayesian estimation, which includes the model formula,dependent and context variables,and other relevant details from the analysis.
+A list containing the results of the regularized Bayesian estimation,
+which includes the model formula,dependent and context variables, and other relevant details from the analysis.
+The returned object is of class \code{mlob_result}.
 }
 \description{
 Implements a regularized Bayesian approach that optimizes
@@ -67,6 +69,24 @@ gamma_Petal.Length 0.4679522 2.582579e-01  -1.972762e-01   1.133181e+00 1.811957
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 }
 }
+\section{Methods}{
+
+The returned object supports the following S3 methods:
+\itemize{
+  \item \code{print(x)} - Display coefficients, standard errors, confidence intervals, Z-values, and p-values
+  \item \code{summary(x)} - Comprehensive summary with significance stars and comparison to unoptimized ML
+  \item \code{coef(x)} - Extract coefficients as a data frame
+  \item \code{se(x)} - Extract standard errors
+  \item \code{vcov(x)} - Extract variance-covariance matrix (diagonal only)
+  \item \code{confint(x, parm, level)} - Extract confidence intervals for specified parameters
+  \item \code{as.data.frame(x)} - Convert results to a data frame format
+  \item \code{dim(x)} - Return dimensions (number of parameters)
+  \item \code{length(x)} - Return number of parameters
+  \item \code{names(x)} - Return parameter names
+  \item \code{update(x, formula, data, conf.level, balancing.limit, punish.coeff, jackknife)} - Update model with new parameters
+}
+}
+
 \examples{
 
 # Example 1: usage with the iris dataset
@@ -81,26 +101,7 @@ jackknife = FALSE)
 
 summary(result_iris)
 
-# Example 2: usage with slightly unbalanced ChickWeight dataset
-
-\dontrun{
-result_ChickWeight <- mlob(
-weight ~ Diet, 
-data = ChickWeight, 
-group = 'Time', 
-punish.coeff = 1.5, 
-jackknife = FALSE)
-
-# View the results
-
-print(result_ChickWeight)
-
-# View summary statistics
-
-summary(result_ChickWeight)
-}
-
-# Example 3: usage with highly unbalanced mtcars dataset (adjusted balancing.limit)
+# Example 2: usage with highly unbalanced mtcars dataset (adjusted balancing.limit)
 
 result_mtcars <- mlob(
 mpg ~ hp + wt + am + hp:wt + hp:am, 
@@ -111,11 +112,35 @@ balancing.limit = 0.35)
 
 summary(result_mtcars)
 
+#' # Example 3: Using all available S3 methods on slightly unbalanced ChickWeight dataset
+
+result <- mlob(weight ~ Time, data = ChickWeight, group = 'Diet', jackknife = FALSE)
+
+# Display methods
+print(result)                    # Display results
+summary(result)                 # Comprehensive summary
+coef(result)                    # Extract coefficients
+se(result)                      # Extract standard errors
+vcov(result)                    # Extract variance-covariance matrix
+confint(result)                 # Extract confidence intervals
+confint(result, "beta_b")       # Extract CI for specific parameter
+confint(result, level = 0.99)   # Extract CI with different confidence level
+as.data.frame(result)            # Convert to data frame
+dim(result)                     # Get dimensions
+length(result)                  # Get number of parameters
+names(result)                   # Get parameter names
+
+# Update model with new parameters
+update(result, conf.level = 0.99)
+
+# List all available methods
+methods(class = "mlob_result")
+
 }
 \references{
 Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024). \doi{10.13140/RG.2.2.18148.39048}
 
-Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024). \doi{10.13140/RG.2.2.34350.01604}
+Dashuk, V., Hecht, M., Luedtke, O., Robitzsch, A., & Zitzmann, S. (2024). \doi{10.1007/s41237-025-00264-7}
 
 Luedtke, O., Marsh, H. W., Robitzsch, A., Trautwein, U., Asparouhov, T., & Muthen, B. (2008). \doi{10.1037/a0012869}
 }

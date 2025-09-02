@@ -10,8 +10,13 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message    = FALSE,
+  warning    = FALSE
 )
+```
+
+```{r load-package, echo=TRUE}
 library(MultiLevelOptimalBayes)
 ```
 
@@ -31,6 +36,8 @@ The core function `mlob()` estimates the between-group coefficient (`beta_b`) us
 - Provides comparison with unregularized ML estimates
 
 # Function Usage
+
+Below is the signature for the `mlob()` function.  This shows the arguments an theit default values you can pass, but **note** that this chunk is not meant to be executed.
 
 ```{r eval = FALSE}
 mlob(
@@ -67,7 +74,7 @@ results should be interpreted with caution.
 
 ## Example 1: Iris Dataset
 
-```{r eval= FALSE}
+```{r}
 result_iris <- mlob(
   Sepal.Length ~ Sepal.Width + Petal.Length,
   data = iris,
@@ -81,11 +88,11 @@ summary(result_iris)
 
 ## Example 2: Slightly Unbalanced ChickWeight Dataset
 
-```{r eval= FALSE}
+```{r}
 result_chick <- mlob(
-  weight ~ Diet,
+  weight ~ Time,
   data = ChickWeight,
-  group = "Time",
+  group = "Diet",
   punish.coeff = 1.5,
   jackknife = FALSE
 )
@@ -101,7 +108,7 @@ The results of the estimation indicate a substantial distinction between the reg
 
 ## Example 3: Highly Unbalanced mtcars Dataset
 
-```{r eval= FALSE}
+```{r}
 result_mtcars <- mlob(
   mpg ~ hp + wt + am + hp:wt + hp:am,
   data = mtcars,
@@ -120,6 +127,110 @@ The output is an object of class `mlob_result`, which contains:
 - Standard errors and confidence intervals
 - Unregularized ML estimates for comparison
 - Information about the data balancing procedure (if used)
+
+# Available S3 Methods
+
+The `mlob_result` object supports a comprehensive set of S3 methods that follow standard R conventions, making it easy to work with results in familiar ways. Here are all available methods:
+
+## Display Methods
+
+```{r}
+# Get a basic result for demonstration
+result <- mlob(weight ~ Time, data = ChickWeight, group = 'Diet', jackknife = FALSE)
+
+# Print method - displays coefficients, standard errors, confidence intervals, Z-values, and p-values
+print(result)
+```
+
+```{r}
+# Summary method - comprehensive summary with significance stars and comparison to unoptimized ML
+summary(result)
+```
+
+## Statistical Methods
+
+```{r}
+# Extract coefficients as a data frame
+coef(result)
+
+# Extract standard errors
+se(result)
+
+# Extract variance-covariance matrix (diagonal only)
+vcov(result)
+
+# Extract confidence intervals
+confint(result)
+
+# Extract confidence intervals for specific parameters
+confint(result, "beta_b")
+
+# Extract confidence intervals with different confidence level
+confint(result, level = 0.99)
+```
+
+## Utility Methods
+
+```{r}
+# Convert results to a data frame format
+as.data.frame(result)
+
+# Get dimensions (number of parameters)
+dim(result)
+
+# Get number of parameters
+length(result)
+
+# Get parameter names
+names(result)
+```
+
+## Update Method
+
+```{r}
+# Update model with new parameters (e.g., different confidence level)
+updated_result <- update(result, conf.level = 0.99)
+summary(updated_result)
+```
+
+## Discovering Available Methods
+
+You can discover all available methods for `mlob_result` objects using:
+
+```{r}
+methods(class = "mlob_result")
+```
+
+## Practical Example: Working with Results
+
+Here's a practical example showing how to use multiple methods together:
+
+```{r}
+# Run analysis
+result <- mlob(weight ~ Time, data = ChickWeight, group = 'Diet', jackknife = FALSE)
+
+# Get basic information
+cat("Number of parameters:", length(result), "\n")
+cat("Parameter names:", paste(names(result), collapse = ", "), "\n")
+
+# Extract key statistics
+coefficients <- coef(result)
+standard_errors <- se(result)
+confidence_intervals <- confint(result, level = 0.99)
+
+# Create a custom summary table
+custom_summary <- data.frame(
+  Parameter = names(result),
+  Estimate = as.numeric(coefficients),
+  SE = as.numeric(standard_errors),
+  CI_Lower = confidence_intervals[, 1],
+  CI_Upper = confidence_intervals[, 2]
+)
+
+print(custom_summary)
+```
+
+All these methods follow standard R conventions, making your `mlob_result` objects compatible with existing R workflows and familiar to users of other statistical packages.
 
 # Limitations
 
@@ -156,8 +267,8 @@ The multilevel latent covariate model: A new, more reliable approach to group-le
 - Steffen Zitzmann
 
 **Contact:**  
-vadashuk@gmail.com 
-binayak.timilsina001@gmail.com
-martin.hecht@hsu-hh.de
+vadashuk@gmail.com  
+binayak.timilsina001@gmail.com  
+martin.hecht@hsu-hh.de  
 steffen.zitzmann@medicalschool-hamburg.de
 
