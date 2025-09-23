@@ -1,7 +1,7 @@
 Package: MultiLevelOptimalBayes
 Type: Package
 Title: Regularized Bayesian Estimator for Two-Level Latent Variable Models
-Version: 0.0.2.0
+Version: 0.0.4.0
 Authors@R: c(person("Valerii", "Dashuk", role = c("aut", "cre"), email = "vadashuk@gmail.com"),
 	person("Binayak", "Timilsina", role = "aut", email = "binayak.timilsina001@gmail.com"),
 	person("Martin", "Hecht", role = "aut", email = "martin.hecht@hsu-hh.de"),
@@ -16,9 +16,12 @@ Description: Implements a regularized Bayesian estimator that optimizes the esti
  parameter estimation in two-level latent variable models. It is designed for
  researchers in psychology, education, and related fields who face challenges in
  estimating between-group effects under small sample sizes and low intraclass
- correlation coefficients. Dashuk et al. (2024) <doi:10.13140/RG.2.2.18148.39048>
+ correlation coefficients. The package includes comprehensive S3 methods for result
+ objects: print(), summary(), coef(), se(), vcov(), confint(), as.data.frame(),
+ dim(), length(), names(), and update() for enhanced usability and integration
+ with standard R workflows. Dashuk et al. (2025a) <doi:10.1017/psy.2025.10045>
  derived the optimal regularized Bayesian estimator;
- Dashuk et al. (2024) <doi:10.13140/RG.2.2.34350.01604> extended it to 
+ Dashuk et al. (2025b) <doi:10.1007/s41237-025-00264-7> extended it to 
  the multivariate case; and Luedtke et al. (2008) <doi:10.1037/a0012869>
  formalized the two-level latent variable framework.
 Imports: pracma
