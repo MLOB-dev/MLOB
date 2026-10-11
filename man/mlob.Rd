@@ -112,8 +112,9 @@ balancing.limit = 0.35)
 
 summary(result_mtcars)
 
-#' # Example 3: Using all available S3 methods on slightly unbalanced ChickWeight dataset
+# Example 3: Using all available S3 methods on slightly unbalanced ChickWeight dataset
 
+\donttest{
 result <- mlob(weight ~ Time, data = ChickWeight, group = 'Diet', jackknife = FALSE)
 
 # Display methods
@@ -135,6 +136,7 @@ update(result, conf.level = 0.99)
 
 # List all available methods
 methods(class = "mlob_result")
+}
 
 }
 \references{

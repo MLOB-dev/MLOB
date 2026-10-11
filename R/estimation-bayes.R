@@ -579,14 +579,20 @@ estimate_Bay_CV <- function(data) {
   d_search <- 5
   radius   <- sqrt(K_sum1 * T_sum1^2)
   
-  # Attempt the usual endpoints
-  Tau02_min <- max(0.01, tau_x2 - d_search * radius)
-  Tau02_max <- max(0.01, tau_x2 + d_search * radius)
+  # Grid bounds are relative to the estimated total variance of x, so that the
+  # estimator does not depend on the units of x. For x with unit total variance
+  # the floor equals 0.01 (a between-group share of 1%).
+  s2_x        <- tau_x2 + sigma_x2
+  Tau02_floor <- 0.01 * s2_x
   
-  # Fallback to a fixed window if anything's off
+  # Attempt the usual endpoints
+  Tau02_min <- max(Tau02_floor, tau_x2 - d_search * radius)
+  Tau02_max <- max(Tau02_floor, tau_x2 + d_search * radius)
+  
+  # Fallback to a fixed window (between-group share of 1% to 100%) if anything's off
   if (!all(is.finite(c(Tau02_min, Tau02_max))) || Tau02_min >= Tau02_max) {
-    Tau02_min <- 0.01
-    Tau02_max <- 10
+    Tau02_min <- Tau02_floor
+    Tau02_max <- s2_x
     warning('Please check grouping, as it does not explain the variation and may be meaningless.')
   }
   

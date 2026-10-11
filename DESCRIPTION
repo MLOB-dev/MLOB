@@ -1,7 +1,8 @@
 Package: MultiLevelOptimalBayes
 Type: Package
-Title: Regularized Bayesian Estimator for Two-Level Latent Variable Models
-Version: 0.0.4.0
+Title: Regularized Bayesian Estimator for Two-Level Latent Variable
+        Models
+Version: 0.0.5.0
 Authors@R: c(person("Valerii", "Dashuk", role = c("aut", "cre"), email = "vadashuk@gmail.com"),
 	person("Binayak", "Timilsina", role = "aut", email = "binayak.timilsina001@gmail.com"),
 	person("Martin", "Hecht", role = "aut", email = "martin.hecht@hsu-hh.de"),
@@ -29,9 +30,8 @@ License: GPL-3
 Depends: R (>= 4.1.0)
 Encoding: UTF-8
 RoxygenNote: 7.3.2
-Suggests: 
-	knitr,
-	rmarkdown,
-	testthat (>= 3.0.0)
+Suggests: knitr, lme4, rmarkdown, testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2026-10-11 11:32:13 UTC; guest
