@@ -19,6 +19,27 @@ test_that("ML estimates equal an independent anova(lm()) computation (kc = 1 and
     expect_equal(fit$Coefficients_ML$beta_b_ML, ref$beta_b_ML, tolerance = 1e-10)
     expect_equal(unname(unlist(fit$Coefficients_ML[-1])), ref$gamma, tolerance = 1e-10)
     expect_equal(unname(unlist(fit$Coefficients[-1])), ref$gamma, tolerance = 1e-10)
+    expect_equal(unname(unlist(fit$Standard_Error[-1])), ref$se_gamma, tolerance = 1e-10)
+  }
+})
+
+test_that("moments of tau_x2 and tau_yx equal the exact moments of the quadratic forms", {
+  # tau_hat = z' A z with z ~ N(0, Sigma): E = tr(A Sigma), Var = 2 tr((A Sigma)^2); for
+  # the cross product z_x' A z_y: Var = tr(A S_x A S_y) + tr((A S_xy)^2).
+  for (seed in 2:4) {
+    df <- reference_data(kc = 0, seed = seed)
+    d <- list(y = df$y, x = df$x, k = 20, n = 10, kn = 200)
+    d$b_b <- estimate_ML_CV(d)$beta_b_ML_CV
+    bay <- estimate_Bay_CV(d)
+    A <- anova_weights(10, 20)
+    Mx <- A %*% latent_cov(bay$tau_x2, bay$sigma_x2, 10, 20)
+    My <- A %*% latent_cov(bay$tau_y2, bay$sigma_y2, 10, 20)
+    Mxy <- A %*% latent_cov(bay$tau_yx, bay$sigma_yx, 10, 20)
+
+    expect_equal(bay$E_x, sum(diag(Mx)), tolerance = 1e-10)
+    expect_equal(bay$V_x, 2 * sum(Mx * t(Mx)), tolerance = 1e-10)
+    expect_equal(bay$E_yx, sum(diag(Mxy)), tolerance = 1e-10)
+    expect_equal(bay$V_yx, sum(Mx * t(My)) + sum(Mxy * t(Mxy)), tolerance = 1e-10)
   }
 })
 

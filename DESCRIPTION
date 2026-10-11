@@ -2,7 +2,7 @@ Package: MultiLevelOptimalBayes
 Type: Package
 Title: Regularized Bayesian Estimator for Two-Level Latent Variable
         Models
-Version: 0.0.5.0
+Version: 0.1.0.0
 Authors@R: c(person("Valerii", "Dashuk", role = c("aut", "cre"), email = "vadashuk@gmail.com"),
 	person("Binayak", "Timilsina", role = "aut", email = "binayak.timilsina001@gmail.com"),
 	person("Martin", "Hecht", role = "aut", email = "martin.hecht@hsu-hh.de"),
@@ -25,7 +25,6 @@ Description: Implements a regularized Bayesian estimator that optimizes the esti
  Dashuk et al. (2025b) <doi:10.1007/s41237-025-00264-7> extended it to 
  the multivariate case; and Luedtke et al. (2008) <doi:10.1037/a0012869>
  formalized the two-level latent variable framework.
-Imports: pracma
 License: GPL-3
 Depends: R (>= 4.1.0)
 Encoding: UTF-8
@@ -34,4 +33,4 @@ Suggests: knitr, lme4, rmarkdown, testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2026-10-11 11:32:13 UTC; guest
+Packaged: 2026-10-11 11:32:19 UTC; guest

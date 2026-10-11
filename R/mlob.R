@@ -29,14 +29,14 @@
 #' 
 #' \preformatted{
 #' Summary of Coefficients:
-#'                     Estimate Std. Error Lower CI (99%) Upper CI (99%)   Z value   Pr(>|z|) Significance
-#' beta_b             0.4279681  0.7544766     -1.5154349       2.371371 0.5672384 0.57055223
-#' gamma_Petal.Length 0.4679522  0.2582579     -0.1972762       1.133181 1.8119567 0.06999289            .
+#'                     Estimate Std. Error Lower CI (99%) Upper CI (99%)   Z value Pr(>|z|) Significance
+#' beta_b             0.2957937 0.30457475     -0.4887389       1.080326 0.9711694 0.331464
+#' gamma_Petal.Length 0.4679522 0.05038678      0.3381645       0.597740 9.2872029 0.000000          ***
 #'
 #' For comparison, summary of coefficients from unoptimized analysis (ML):
-#'                    Estimate   Std. Error Lower CI (99%) Upper CI (99%)      Z value   Pr(>|z|) Significance
-#' beta_b             0.6027440 5.424780e+15  -1.397331e+16   1.397331e+16 1.111094e-16 1.00000000
-#' gamma_Petal.Length 0.4679522 2.582579e-01  -1.972762e-01   1.133181e+00 1.811957e+00 0.06999289            .
+#'                     Estimate Std. Error Lower CI (99%) Upper CI (99%)   Z value  Pr(>|z|) Significance
+#' beta_b             0.6027440 0.87389866     -1.6482698       2.853758 0.6897184 0.4903713
+#' gamma_Petal.Length 0.4679522 0.05038678      0.3381645       0.597740 9.2872029 0.0000000          ***
 #'
 #' Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #' }
@@ -81,7 +81,7 @@
 #' result_iris <- mlob(
 #' Sepal.Length ~ Sepal.Width + Petal.Length, 
 #' data = iris, group = 'Species',
-#' conf.level = 0.01,
+#' conf.level = 0.99,
 #' jackknife = FALSE)
 #' 
 #' # View summary statistics (similar to summary of a linear model);

@@ -1,3 +1,45 @@
+# MultiLevelOptimalBayes 0.1.0.0
+
+This release corrects the implementation of the regularized Bayesian
+estimator so that it follows the derivation in Dashuk et al. (2025a, 2025b).
+**Estimates and standard errors of `beta_b` change**; results published with
+earlier versions can be reproduced with MultiLevelOptimalBayes 0.0.5.0 or
+earlier from the CRAN archive.
+
+## Bug fixes in the Bayesian estimator
+
+* The gamma approximations of the estimated between-group variance of the
+  predictor (`tau_x2`) and covariance (`tau_yx`) had the wrong mean: the
+  eigenvectors of the within-group part were never filled in, so the
+  approximations described the between-group mean square `MSA / n`
+  (mean `tau + sigma / n`) instead of `(MSA - MSD) / n` (mean `tau`). The mean
+  and variance of both estimators are now computed exactly in closed form.
+* The scale parameters of the gamma approximations lacked a factor of 2
+  (each `theta_i * chi^2_1` term is `Gamma(1/2, 2 theta_i)`), which halved
+  their means and made the "5 standard deviation" search window 2.5 standard
+  deviations wide.
+* The MSE minimized in the grid search now is the one derived in
+  Dashuk et al. (2025a, Eqs. 78 and 101). The previous implementation had the
+  mean of the denominator instead of its square in the first term, which made
+  the estimate depend on the units of the predictor.
+* The standard errors of `beta_b` (Bayesian and ML) use the same corrected
+  moments. Where the variance of the ML ratio does not exist under the gamma
+  approximation (`k_B <= 2`), a first-order approximation is reported.
+* Standard errors of the covariate coefficients (`gamma`) are now the OLS
+  standard errors of the regression that estimates them. Previously the
+  residuals omitted the intercept and the other covariates, so the standard
+  errors depended on the mean of `y` and on the location of the covariates.
+
+## Other changes
+
+* Estimates of `beta_b` are now exactly equivariant to the units of `x` and
+  `y` (multiplying `x` by `s` divides `beta_b` and its standard error by `s`).
+* Estimation no longer builds `(nJ + J + 1)`-dimensional covariance matrices,
+  so `mlob()` (and especially `jackknife = TRUE`) is much faster and works for
+  large data sets. The `pracma` dependency is removed.
+* Example 1 in `?mlob` used `conf.level = 0.01` (a 1% interval); it now uses
+  `0.99`.
+
 # MultiLevelOptimalBayes 0.0.5.0
 
 ## Bug fixes

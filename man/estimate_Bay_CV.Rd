@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimation-bayes.R
 \name{estimate_Bay_CV}
 \alias{estimate_Bay_CV}
-\title{Bayesian Estimation Functions for MultiLevelOptimalBayes}
+\title{Estimate Bayesian parameters with control variables}
 \usage{
 estimate_Bay_CV(data)
 }
@@ -13,13 +13,6 @@ estimate_Bay_CV(data)
 List with Bayesian estimation results
 }
 \description{
-This file contains the Bayesian estimation functions
-for the MultiLevelOptimalBayes package.
+Estimate Bayesian parameters with control variables
 }
-\keyword{Bayesian}
-\keyword{Estimate}
-\keyword{control}
 \keyword{internal}
-\keyword{parameters}
-\keyword{variables}
-\keyword{with}

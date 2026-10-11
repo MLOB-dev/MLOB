@@ -69,25 +69,25 @@ summary(result)
 #> 
 #> Summary of Coefficients:
 #>                     Estimate Std. Error Lower CI (95%) Upper CI (95%)   Z value
-#> beta_b             0.8308711  1.4655556    -2.04156502      3.7033072 0.5669325
-#> gamma_Petal.Length 0.4679522  0.2582579    -0.03822406      0.9741285 1.8119567
-#>                      Pr(>|z|) Significance
-#> beta_b             0.57076004             
-#> gamma_Petal.Length 0.06999289            .
+#> beta_b             0.2957937 0.30457475     -0.3011619      0.8927492 0.9711694
+#> gamma_Petal.Length 0.4679522 0.05038678      0.3691960      0.5667085 9.2872029
+#>                    Pr(>|z|) Significance
+#> beta_b             0.331464             
+#> gamma_Petal.Length 0.000000          ***
 #> 
 #> 
 #> For comparison, summary of coefficients from unoptimized analysis (ML):
-#>                     Estimate   Std. Error Lower CI (95%) Upper CI (95%)
-#> beta_b             0.6027440 5.424780e+15  -1.063237e+16   1.063237e+16
-#> gamma_Petal.Length 0.4679522 2.582579e-01  -3.822406e-02   9.741285e-01
-#>                         Z value   Pr(>|z|) Significance
-#> beta_b             1.111094e-16 1.00000000             
-#> gamma_Petal.Length 1.811957e+00 0.06999289            .
+#>                     Estimate Std. Error Lower CI (95%) Upper CI (95%)   Z value
+#> beta_b             0.6027440 0.87389866      -1.110066      2.3155539 0.6897184
+#> gamma_Petal.Length 0.4679522 0.05038678       0.369196      0.5667085 9.2872029
+#>                     Pr(>|z|) Significance
+#> beta_b             0.4903713             
+#> gamma_Petal.Length 0.0000000          ***
 #> 
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Note:
-#>   The standard error from unoptimized ML estimation is about 3.701518e+17% larger than the standard error obtained through our optimization procedure,
+#>   The standard error from unoptimized ML estimation is about 186.9% larger than the standard error obtained through our optimization procedure,
 #>   meaning that the optimized estimates are more accurate.
 #>   Concerning the estimates themselves, the unoptimized ML estimates may
 #>   differ greatly from the optimized estimates and should not be reported.
@@ -95,7 +95,7 @@ summary(result)
 #>   unoptimized ML estimates,
 #>   please use them and their corresponding standard errors (first table of
 #>   output) for interpretation and reporting.
-#>   For more information, see Dashuk et al. (2025).
+#>   For more information, see Dashuk et al. (2025a).
 ```
 
 ## Available Methods
@@ -112,24 +112,24 @@ print(result)      # Display coefficients, standard errors, confidence intervals
 #> 
 #> Coefficients
 #>     beta_b gamma_Petal.Length
-#>  0.8308711          0.4679522
+#>  0.2957937          0.4679522
 #> 
 #> Standard_Error
-#>    beta_b gamma_Petal.Length
-#>  1.465556          0.2582579
+#>     beta_b gamma_Petal.Length
+#>  0.3045747         0.05038678
 #> 
 #> Confidence_Interval (95%)
-#>                          Lower     Upper
-#> beta_b             -2.04156502 3.7033072
-#> gamma_Petal.Length -0.03822406 0.9741285
+#>                         Lower     Upper
+#> beta_b             -0.3011619 0.8927492
+#> gamma_Petal.Length  0.3691960 0.5667085
 #> 
 #> Z value
 #>     beta_b gamma_Petal.Length
-#>  0.5669325           1.811957
+#>  0.9711694           9.287203
 #> 
 #> p value
-#>   beta_b gamma_Petal.Length
-#>  0.57076         0.06999289
+#>    beta_b gamma_Petal.Length
+#>  0.331464                  0
 ```
 
 ``` r
@@ -139,25 +139,25 @@ summary(result)   # Comprehensive summary with significance stars and comparison
 #> 
 #> Summary of Coefficients:
 #>                     Estimate Std. Error Lower CI (95%) Upper CI (95%)   Z value
-#> beta_b             0.8308711  1.4655556    -2.04156502      3.7033072 0.5669325
-#> gamma_Petal.Length 0.4679522  0.2582579    -0.03822406      0.9741285 1.8119567
-#>                      Pr(>|z|) Significance
-#> beta_b             0.57076004             
-#> gamma_Petal.Length 0.06999289            .
+#> beta_b             0.2957937 0.30457475     -0.3011619      0.8927492 0.9711694
+#> gamma_Petal.Length 0.4679522 0.05038678      0.3691960      0.5667085 9.2872029
+#>                    Pr(>|z|) Significance
+#> beta_b             0.331464             
+#> gamma_Petal.Length 0.000000          ***
 #> 
 #> 
 #> For comparison, summary of coefficients from unoptimized analysis (ML):
-#>                     Estimate   Std. Error Lower CI (95%) Upper CI (95%)
-#> beta_b             0.6027440 5.424780e+15  -1.063237e+16   1.063237e+16
-#> gamma_Petal.Length 0.4679522 2.582579e-01  -3.822406e-02   9.741285e-01
-#>                         Z value   Pr(>|z|) Significance
-#> beta_b             1.111094e-16 1.00000000             
-#> gamma_Petal.Length 1.811957e+00 0.06999289            .
+#>                     Estimate Std. Error Lower CI (95%) Upper CI (95%)   Z value
+#> beta_b             0.6027440 0.87389866      -1.110066      2.3155539 0.6897184
+#> gamma_Petal.Length 0.4679522 0.05038678       0.369196      0.5667085 9.2872029
+#>                     Pr(>|z|) Significance
+#> beta_b             0.4903713             
+#> gamma_Petal.Length 0.0000000          ***
 #> 
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Note:
-#>   The standard error from unoptimized ML estimation is about 3.701518e+17% larger than the standard error obtained through our optimization procedure,
+#>   The standard error from unoptimized ML estimation is about 186.9% larger than the standard error obtained through our optimization procedure,
 #>   meaning that the optimized estimates are more accurate.
 #>   Concerning the estimates themselves, the unoptimized ML estimates may
 #>   differ greatly from the optimized estimates and should not be reported.
@@ -165,7 +165,7 @@ summary(result)   # Comprehensive summary with significance stars and comparison
 #>   unoptimized ML estimates,
 #>   please use them and their corresponding standard errors (first table of
 #>   output) for interpretation and reporting.
-#>   For more information, see Dashuk et al. (2025).
+#>   For more information, see Dashuk et al. (2025a).
 ```
 
 ### Statistical Methods
@@ -173,24 +173,24 @@ summary(result)   # Comprehensive summary with significance stars and comparison
 ``` r
 coef(result)                    # Extract coefficients as a data frame
 #>      beta_b gamma_Petal.Length
-#> 1 0.8308711          0.4679522
+#> 1 0.2957937          0.4679522
 se(result)                      # Extract standard errors
 #>             beta_b gamma_Petal.Length 
-#>          1.4655556          0.2582579
+#>         0.30457475         0.05038678
 vcov(result)                    # Extract variance-covariance matrix (diagonal only)
 #>             beta_b gamma_Petal.Length 
-#>         2.14785309         0.06669717
+#>        0.092765778        0.002538827
 confint(result)                 # Extract confidence intervals
-#>                           2.5%     97.5%
-#> beta_b             -2.04156502 3.7033072
-#> gamma_Petal.Length -0.03822406 0.9741285
+#>                          2.5%     97.5%
+#> beta_b             -0.3011619 0.8927492
+#> gamma_Petal.Length  0.3691960 0.5667085
 confint(result, "beta_b")       # Extract CI for specific parameter
-#>             2.5%    97.5%
-#> beta_b -2.041565 3.703307
+#>              2.5%     97.5%
+#> beta_b -0.3011619 0.8927492
 confint(result, level = 0.99)   # Extract CI with different confidence level
 #>                          0.5%    99.5%
-#> beta_b             -2.9441499 4.605892
-#> gamma_Petal.Length -0.1972762 1.133181
+#> beta_b             -0.4887389 1.080326
+#> gamma_Petal.Length  0.3381645 0.597740
 ```
 
 ### Utility Methods
@@ -198,11 +198,11 @@ confint(result, level = 0.99)   # Extract CI with different confidence level
 ``` r
 as.data.frame(result)           # Convert results to a data frame format
 #>                     Estimate Std. Error Lower CI (95%) Upper CI (95%)   Z value
-#> beta_b             0.8308711  1.4655556    -2.04156502      3.7033072 0.5669325
-#> gamma_Petal.Length 0.4679522  0.2582579    -0.03822406      0.9741285 1.8119567
-#>                      Pr(>|z|)
-#> beta_b             0.57076004
-#> gamma_Petal.Length 0.06999289
+#> beta_b             0.2957937 0.30457475     -0.3011619      0.8927492 0.9711694
+#> gamma_Petal.Length 0.4679522 0.05038678      0.3691960      0.5667085 9.2872029
+#>                    Pr(>|z|)
+#> beta_b             0.331464
+#> gamma_Petal.Length 0.000000
 dim(result)                     # Get dimensions (number of parameters)
 #> [1] 1 2
 length(result)                  # Get number of parameters
@@ -221,25 +221,25 @@ summary(updated_result)
 #> 
 #> Summary of Coefficients:
 #>                     Estimate Std. Error Lower CI (99%) Upper CI (99%)   Z value
-#> beta_b             0.8308711  1.4655556     -2.9441499       4.605892 0.5669325
-#> gamma_Petal.Length 0.4679522  0.2582579     -0.1972762       1.133181 1.8119567
-#>                      Pr(>|z|) Significance
-#> beta_b             0.57076004             
-#> gamma_Petal.Length 0.06999289            .
+#> beta_b             0.2957937 0.30457475     -0.4887389       1.080326 0.9711694
+#> gamma_Petal.Length 0.4679522 0.05038678      0.3381645       0.597740 9.2872029
+#>                    Pr(>|z|) Significance
+#> beta_b             0.331464             
+#> gamma_Petal.Length 0.000000          ***
 #> 
 #> 
 #> For comparison, summary of coefficients from unoptimized analysis (ML):
-#>                     Estimate   Std. Error Lower CI (99%) Upper CI (99%)
-#> beta_b             0.6027440 5.424780e+15  -1.397331e+16   1.397331e+16
-#> gamma_Petal.Length 0.4679522 2.582579e-01  -1.972762e-01   1.133181e+00
-#>                         Z value   Pr(>|z|) Significance
-#> beta_b             1.111094e-16 1.00000000             
-#> gamma_Petal.Length 1.811957e+00 0.06999289            .
+#>                     Estimate Std. Error Lower CI (99%) Upper CI (99%)   Z value
+#> beta_b             0.6027440 0.87389866     -1.6482698       2.853758 0.6897184
+#> gamma_Petal.Length 0.4679522 0.05038678      0.3381645       0.597740 9.2872029
+#>                     Pr(>|z|) Significance
+#> beta_b             0.4903713             
+#> gamma_Petal.Length 0.0000000          ***
 #> 
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Note:
-#>   The standard error from unoptimized ML estimation is about 3.701518e+17% larger than the standard error obtained through our optimization procedure,
+#>   The standard error from unoptimized ML estimation is about 186.9% larger than the standard error obtained through our optimization procedure,
 #>   meaning that the optimized estimates are more accurate.
 #>   Concerning the estimates themselves, the unoptimized ML estimates may
 #>   differ greatly from the optimized estimates and should not be reported.
@@ -247,7 +247,7 @@ summary(updated_result)
 #>   unoptimized ML estimates,
 #>   please use them and their corresponding standard errors (first table of
 #>   output) for interpretation and reporting.
-#>   For more information, see Dashuk et al. (2025).
+#>   For more information, see Dashuk et al. (2025a).
 ```
 
 ### Discover Available Methods
