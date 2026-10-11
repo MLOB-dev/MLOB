@@ -2,9 +2,10 @@
 
 This release corrects the implementation of the regularized Bayesian
 estimator so that it follows the derivation in Dashuk et al. (2025a, 2025b).
-**Estimates and standard errors of `beta_b` change**; results published with
-earlier versions can be reproduced with MultiLevelOptimalBayes 0.0.5.0 or
-earlier from the CRAN archive.
+**Estimates and standard errors of `beta_b` change**; results from earlier
+versions can be reproduced with MultiLevelOptimalBayes 0.0.4.0 from the CRAN
+archive. (GitHub branch `v0.0.5.0` has the same estimator family, with
+additional bug fixes.)
 
 ## Bug fixes in the Bayesian estimator
 
